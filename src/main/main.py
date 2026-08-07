@@ -49,11 +49,25 @@ def main():
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
 
+    # open file to read
+    # first line is an entry, gather column data
+        # if number of items is not 2 then ignore and move on to next line
+    # set users table columns to given data
+    # validate/clean up
+    # next line in csv file
+
     print("TODO: load_users")
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
 def load_and_clean_call_logs(file_path):
+
+    # open file to read
+    # first line is an entry, gather column data
+        # if number of items is not 5 then ignore and move on to next line
+    # set callLogs table columns to given data
+    # validate/clean up
+    # next line in csv file
 
     print("TODO: load_call_logs")
 
@@ -63,12 +77,26 @@ def load_and_clean_call_logs(file_path):
 # example: 1,105.0,4 - where 1 is the userId, 105.0 is the avgDuration, and 4 is the numCalls.
 def write_user_analytics(csv_file_path):
 
+    # loop in which we iterate through userIds
+    # SELECT * from callLogs WHERE userId = loop iterator
+    # calculate numCalls
+        # aggregate Count with specific userId
+    # calculate avgDuration
+        # (SUM(endTime - startTime)) / numCalls
+    
+    # open file to write
+        # userId, avgDuration, numCalls
+
     print("TODO: write_user_analytics")
 
 
 # This function will write the callLogs ordered by userId, then start time.
 # Then, write the ordered callLogs to orderedCalls.csv
 def write_ordered_calls(csv_file_path):
+
+    # SELECT * FROM callLogs ORDER by userId, startTime
+    # ret = cursor.fetchall()
+    # open file to write and insert 'ret'
 
     print("TODO: write_ordered_calls")
 
