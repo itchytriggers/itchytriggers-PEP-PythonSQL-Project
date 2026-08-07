@@ -64,7 +64,7 @@ def load_and_clean_users(file_path):
         for row in reader:  # This loop skips past any lines in the userLogs file that has the wrong number of entries
             if len(row) != 2:
                 continue
-            if row[0] == " ":
+            if row[0] == " ":   # brute force edgecase checks for bad entires that aren't NULL
                 continue
             if row[0] == "  ":
                 continue
@@ -76,7 +76,7 @@ def load_and_clean_users(file_path):
             cursor.execute("""INSERT INTO users (firstName, lastName) VALUES (?, ?)""", (row[0].strip(), row[1].strip()))   # this line inserts the csv file data into the users table
 
 
-    print("TODO: load_users")
+    # print("TODO: load_users")
 
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
@@ -89,7 +89,19 @@ def load_and_clean_call_logs(file_path):
     # validate/clean up
     # next line in csv file
 
-    print("TODO: load_call_logs")
+    with open(file_path, newline="", encoding="utf-8") as srcfile:
+        reader = csv.reader(srcfile)
+
+        next(reader, None)
+
+        for row in reader:
+            if len(row) != 5:
+                continue
+
+            # after validating the input data, write it into the callLogs table
+            cursor.execute("""INSERT INTO callLogs (phoneNumber, startTime, endTime, direction, userId) VALUES (?, ?, ?, ?, ?)""", (row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip(), row[4].strip()))
+
+    # print("TODO: load_call_logs")
 
 
 # This function will write analytics data to testUserAnalytics.csv - average call time, and number of calls per user.
