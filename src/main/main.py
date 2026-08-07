@@ -56,6 +56,26 @@ def load_and_clean_users(file_path):
     # validate/clean up
     # next line in csv file
 
+    with open(file_path, newline="", encoding="utf-8") as srcfile:
+        reader = csv.reader(srcfile)
+
+        next(reader, None) # this line skips the header line in the userLogs file
+
+        for row in reader:  # This loop skips past any lines in the userLogs file that has the wrong number of entries
+            if len(row) != 2:
+                continue
+            if row[0] == " ":
+                continue
+            if row[0] == "  ":
+                continue
+            if row[1] == " ":
+                continue
+            if row[1] == "  ":
+                continue
+
+            cursor.execute("""INSERT INTO users (firstName, lastName) VALUES (?, ?)""", (row[0].strip(), row[1].strip()))   # this line inserts the csv file data into the users table
+
+
     print("TODO: load_users")
 
 
@@ -97,6 +117,17 @@ def write_ordered_calls(csv_file_path):
     # SELECT * FROM callLogs ORDER by userId, startTime
     # ret = cursor.fetchall()
     # open file to write and insert 'ret'
+
+    cursor.execute(""" SELECT callId, phoneNumber, startTime, endTime, direction, userId FROM calllogs ORDER BY userId, startTime;""")
+
+    rows = cursor.fetchall()
+    with open(csv_file_path, 'w') as csvfile:
+        cw = csvwriter(csvfile)
+
+        cw.writerow(["callId", "phoneNumber", "startTime", "endTime", "Direction", "userId"])
+
+        for row in rows:
+            cw.writerow(row)
 
     print("TODO: write_ordered_calls")
 
