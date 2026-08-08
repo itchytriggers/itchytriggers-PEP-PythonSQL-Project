@@ -1,5 +1,7 @@
 import csv
 import sqlite3
+import datetime
+from datetime import timedelta
 
 # Connect to the SQLite in-memory database
 conn = sqlite3.connect(':memory:')
@@ -142,7 +144,7 @@ def write_user_analytics(csv_file_path):
     # Iterating through each row, or record, we can calculate the call duration and number of calls per user_id and
     # store the results in local dictionary structures
     for row in table:
-        startTime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")   # strptime is a method from the built-in datetime module that can parse date/time data into a datetime object
+        startTime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")   # strptime is a method from the  datetime module that can parse date/time data into a datetime object
         endTime = datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
         user_id = row[4]
 
