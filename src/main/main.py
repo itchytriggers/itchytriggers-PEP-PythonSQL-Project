@@ -160,7 +160,8 @@ def write_user_analytics(csv_file_path):
     with open(csv_file_path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
 
-        next(writer, None) # the header file is already written in the csv file
+        # next(writer, None) # the header file is already written in the csv file
+        writer.writerow(["userId", "avgDuration", "numCalls"])
 
         for user_id in sorted(num_calls):
             avgDuration = (call_duration[user_id] / num_calls[user_id])
