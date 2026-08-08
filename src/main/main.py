@@ -189,7 +189,7 @@ def write_ordered_calls(csv_file_path):
         writer = csv.writer(csvfile)
 
         # this writes in the header row
-        writer.writerow(["phoneNumber", "startTime", "endTime", "Direction", "userId"])
+        writer.writerow(["callId", "phoneNumber", "startTime", "endTime", "Direction", "userId"])
 
         for row in table:
             writer.writerow(table)
