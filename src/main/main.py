@@ -51,12 +51,6 @@ def main():
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
 
-    # open file to read
-    # first line is an entry, gather column data
-        # if number of items is not 2 then ignore and move on to next line
-    # set users table columns to given data
-    # validate/clean up
-    # next line in csv file
 
     with open(file_path, newline="", encoding="utf-8") as srcfile:
         reader = csv.reader(srcfile)
@@ -84,12 +78,6 @@ def load_and_clean_users(file_path):
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
 def load_and_clean_call_logs(file_path):
 
-    # open file to read
-    # first line is an entry, gather column data
-        # if number of items is not 5 then ignore and move on to next line
-    # set callLogs table columns to given data
-    # validate/clean up
-    # next line in csv file
 
     with open(file_path, newline="", encoding="utf-8") as srcfile:
         reader = csv.reader(srcfile)
@@ -123,15 +111,6 @@ def load_and_clean_call_logs(file_path):
 # example: 1,105.0,4 - where 1 is the userId, 105.0 is the avgDuration, and 4 is the numCalls.
 def write_user_analytics(csv_file_path):
 
-    # loop in which we iterate through userIds
-    # SELECT * from callLogs WHERE userId = loop iterator
-    # calculate numCalls
-        # aggregate Count with specific userId
-    # calculate avgDuration
-        # (SUM(endTime - startTime)) / numCalls
-    
-    # open file to write
-        # userId, avgDuration, numCalls
 
     # the following fetches all of the callLog's records and stores them in a local variable
     cursor.execute("""SELECT userId, startTime, endTime FROM callLogs""")
@@ -144,11 +123,11 @@ def write_user_analytics(csv_file_path):
     # Iterating through each row, or record, we can calculate the call duration and number of calls per user_id and
     # store the results in local dictionary structures
     for row in table:
-        startTime = row[1]  # strptime is a method from the datetime module that can parse date/time data into a datetime object
+        startTime = row[1]  
         endTime = row[2]
         user_id = row[0]
 
-        # total_seconds() is a method from the timedelta module which is part of the datetime module
+        
         callDuration = (endTime - startTime)
         
         # This line increments the total call duration dictionary under this user_id's key
@@ -183,7 +162,7 @@ def write_ordered_calls(csv_file_path):
     # this fetches the table records and stores it in a local variable
     # In this SELECT query, we can order the columns by userId, then startTime
     cursor.execute(""" SELECT callId, phoneNumber, startTime, endTime, direction, userId FROM calllogs ORDER BY userId, startTime;""")   # all columns need to be specified since we need callId
-    table = cursor.fetchall()
+    ret = cursor.fetchall()
 
     with open(csv_file_path, 'w', newline="") as csvfile:
         writer = csv.writer(csvfile)
@@ -191,7 +170,7 @@ def write_ordered_calls(csv_file_path):
         # this writes in the header row
         writer.writerow(["callId", "phoneNumber", "startTime", "endTime", "direction", "userId"])
 
-        for row in table:
+        for row in ret:
             writer.writerows(table)
 
     # print("TODO: write_ordered_calls")
