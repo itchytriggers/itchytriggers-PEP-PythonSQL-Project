@@ -164,7 +164,7 @@ def write_user_analytics(csv_file_path):
         writer.writerow(["userId", "avgDuration", "numCalls"])
 
         for user_id in sorted(num_calls):
-            avgDuration = (call_duration[user_id] / num_calls[user_id])
+            avgDuration = (call_duration_dict[user_id] / num_calls[user_id])
 
             writer.writerow([user_id, avgDuration, num_calls[user_id]])
 
