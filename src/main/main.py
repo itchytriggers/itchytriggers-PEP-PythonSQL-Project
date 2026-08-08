@@ -131,7 +131,42 @@ def write_user_analytics(csv_file_path):
     # open file to write
         # userId, avgDuration, numCalls
 
-    print("TODO: write_user_analytics")
+    # the following fetches all of the callLog's records and stores them in a local variable
+    cursor.execute("""SELECT userId, startTime, endTime FROM callLogs""")
+    table = cursor.fetchall() 
+
+    # Based on the given hints, dictionaries will be made to store intermediary calculations
+    call_duration_dict = {}
+    num_calls = {}
+
+    # Iterating through each row, or record, we can calculate the call duration and number of calls per user_id and
+    # store the results in local dictionary structures
+    for row in table:
+        startTime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")   # strptime is a method from the built-in datetime module that can parse date/time data into a datetime object
+        endTime = datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
+        user_id = row[4]
+
+        # total_seconds() is a method from the timedelta module which is part of the datetime module
+        callDuration = (endTime - startTime).totalseconds()
+        
+        # This line increments the total call duration dictionary under this user_id's key
+        call_duration_dict[user_id] = call_duration_dict.get(user_id, 0) + callDuration
+
+        # this line increments the number of calls for this user_id key in the num_calls dictionary
+        num_calls[user_id] = num_calls.get(user_id, 0) + 1  
+
+    with open(file_path, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+
+        next(writer, None) # the header file is already written in the csv file
+
+        for user_id in sorted(num_calls):
+            avgDuration = (call_duration[user_id] / num_calls[user_id])
+
+            writer.writerow([user_id, avgDuration, num_calls[user_id]])
+
+
+    # print("TODO: write_user_analytics")
 
 
 # This function will write the callLogs ordered by userId, then start time.
@@ -146,12 +181,12 @@ def write_ordered_calls(csv_file_path):
 
     rows = cursor.fetchall()
     with open(csv_file_path, 'w') as csvfile:
-        cw = csvwriter(csvfile)
+        writer = csvwriter(csvfile)
 
-        cw.writerow(["callId", "phoneNumber", "startTime", "endTime", "Direction", "userId"])
+        writer.writerow(["callId", "phoneNumber", "startTime", "endTime", "Direction", "userId"])
 
         for row in rows:
-            cw.writerow(row)
+            writer.writerow(row)
 
     print("TODO: write_ordered_calls")
 
