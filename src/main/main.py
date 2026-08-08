@@ -146,7 +146,7 @@ def write_user_analytics(csv_file_path):
     for row in table:
         startTime = row[1]  # strptime is a method from the datetime module that can parse date/time data into a datetime object
         endTime = row[2]
-        user_id = row[4]
+        user_id = row[0]
 
         # total_seconds() is a method from the timedelta module which is part of the datetime module
         callDuration = (endTime - startTime).totalseconds()
