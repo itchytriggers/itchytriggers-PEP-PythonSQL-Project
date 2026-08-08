@@ -182,7 +182,7 @@ def write_ordered_calls(csv_file_path):
 
     # this fetches the table records and stores it in a local variable
     # In this SELECT query, we can order the columns by userId, then startTime
-    cursor.execute(""" SELECT * FROM calllogs ORDER BY userId, startTime;""")
+    cursor.execute(""" SELECT callId, phoneNumber, startTime, endTime, direction, userId FROM calllogs ORDER BY userId, startTime;""")   # all columns need to be specified since we need callId
     table = cursor.fetchall()
 
     with open(csv_file_path, 'w', newline="") as csvfile:
