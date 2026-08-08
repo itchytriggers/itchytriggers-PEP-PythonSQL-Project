@@ -99,6 +99,16 @@ def load_and_clean_call_logs(file_path):
                 continue
             if row[2] == "drop table students;": # brute force edgecase checks for bad entires that aren't NULL
                 continue
+            if row[0] == "":
+                continue
+            if row[1] == "":
+                continue
+            if row[2] == "":
+                continue
+            if row[3] == "":
+                continue
+            if row[4] == "":
+                continue
 
             # after validating the input data, write it into the callLogs table
             cursor.execute("""INSERT INTO callLogs (phoneNumber, startTime, endTime, direction, userId) VALUES (?, ?, ?, ?, ?)""", (row[0].strip(), row[1].strip(), row[2].strip(), row[3].strip(), row[4].strip()))
