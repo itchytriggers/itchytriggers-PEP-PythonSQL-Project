@@ -157,7 +157,7 @@ def write_user_analytics(csv_file_path):
         # this line increments the number of calls for this user_id key in the num_calls dictionary
         num_calls[user_id] = num_calls.get(user_id, 0) + 1  
 
-    with open(file_path, "w", newline="") as csvfile:
+    with open(csv_file_path, "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
 
         next(writer, None) # the header file is already written in the csv file
