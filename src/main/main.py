@@ -149,7 +149,7 @@ def write_user_analytics(csv_file_path):
         user_id = row[0]
 
         # total_seconds() is a method from the timedelta module which is part of the datetime module
-        callDuration = (endTime - startTime).totalseconds()
+        callDuration = (endTime - startTime)
         
         # This line increments the total call duration dictionary under this user_id's key
         call_duration_dict[user_id] = call_duration_dict.get(user_id, 0) + callDuration
