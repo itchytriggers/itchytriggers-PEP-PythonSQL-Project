@@ -97,7 +97,7 @@ def load_and_clean_call_logs(file_path):
         for row in reader:
             if len(row) != 5:
                 continue
-            if row[3] == "drop table students;": # brute force edgecase checks for bad entires that aren't NULL
+            if row[2] == "drop table students;": # brute force edgecase checks for bad entires that aren't NULL
                 continue
 
             # after validating the input data, write it into the callLogs table
