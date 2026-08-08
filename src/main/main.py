@@ -144,8 +144,8 @@ def write_user_analytics(csv_file_path):
     # Iterating through each row, or record, we can calculate the call duration and number of calls per user_id and
     # store the results in local dictionary structures
     for row in table:
-        startTime = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S")   # strptime is a method from the  datetime module that can parse date/time data into a datetime object
-        endTime = datetime.strptime(row[2], "%Y-%m-%d %H:%M:%S")
+        startTime = row[1]  # strptime is a method from the datetime module that can parse date/time data into a datetime object
+        endTime = row[2]
         user_id = row[4]
 
         # total_seconds() is a method from the timedelta module which is part of the datetime module
